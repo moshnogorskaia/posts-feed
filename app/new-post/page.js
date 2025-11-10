@@ -1,4 +1,6 @@
 import { storePost } from '@/lib/posts';
+import { redirect } from 'next/navigation';
+import FormSubmit from '@/components/form-submit';
 
 export default function NewPostPage() {
   async function createPost(formData) {
@@ -7,7 +9,9 @@ export default function NewPostPage() {
     const image = formData.get('image');
     const content = formData.get('content');
     
-    storePost({ title, imageUrl: '', content, userId: 1 });
+    await storePost({ title, imageUrl: '', content, userId: 1 });
+
+    redirect('/feed');
   }
   
 
@@ -33,8 +37,7 @@ export default function NewPostPage() {
           <textarea id="content" name="content" rows="5" />
         </p>
         <p className="form-actions">
-          <button type="reset">Reset</button>
-          <button>Create Post</button>
+          <FormSubmit />
         </p>
       </form>
     </>
