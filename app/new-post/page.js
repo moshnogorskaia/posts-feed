@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import PostForm from '@/components/post-form';
 
 export default function NewPostPage() {
-  async function createPost(formData) {
+  async function createPost(prevState, formData) {
     'use server';
     const title = formData.get('title');
     const image = formData.get('image');
@@ -19,7 +19,7 @@ export default function NewPostPage() {
       errors.push('Content is required!');
     }
 
-    if (!image) {
+    if (!image || image.size === 0) {
       errors.push('Image is required!');
     }
 
