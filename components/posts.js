@@ -1,28 +1,31 @@
 import { formatDate } from '@/lib/format';
 import LikeButton from './like-icon';
+import { togglePostLikeStatus } from '@/actions/posts';
 
 function Post({ post }) {
+  const { title, image, userFirstName, createdAt, id, isLiked, content } = post;
   return (
     <article className="post">
       <div className="post-image">
-        <img src={post.image} alt={post.title} />
+        <img src={image} alt={title} />
       </div>
       <div className="post-content">
         <header>
           <div>
-            <h2>{post.title}</h2>
+            <h2>{title}</h2>
             <p>
-              Shared by {post.userFirstName} on{' '}
-              <time dateTime={post.createdAt}>
-                {formatDate(post.createdAt)}
-              </time>
+              Shared by {userFirstName} on{' '}
+              <time dateTime={createdAt}>{formatDate(createdAt)}</time>
             </p>
           </div>
-          <div>
+          <form
+            action={togglePostLikeStatus.bind(null, id)}
+            className={isLiked ? 'liked' : ''}
+          >
             <LikeButton />
-          </div>
+          </form>
         </header>
-        <p>{post.content}</p>
+        <p>{content}</p>
       </div>
     </article>
   );

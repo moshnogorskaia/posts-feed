@@ -3,6 +3,7 @@
 import { uploadImage } from '@/lib/cloudinary';
 import { storePost } from '@/lib/posts';
 import { redirect } from 'next/navigation';
+import { updatePostLikeStatus } from '@/lib/posts';
 
 export async function createPost(prevState, formData) {
   const title = formData.get('title');
@@ -37,4 +38,8 @@ export async function createPost(prevState, formData) {
   await storePost({ title, imageUrl, content, userId: 1 });
 
   redirect('/feed');
+}
+
+export async function togglePostLikeStatus(postId) {
+  await updatePostLikeStatus(postId, 2);
 }
