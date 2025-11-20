@@ -38,6 +38,7 @@ export async function createPost(prevState, formData) {
 
   await storePost({ title, imageUrl, content, userId: 1 });
 
+  revalidatePath('/', 'layout');
   redirect('/feed');
 }
 
